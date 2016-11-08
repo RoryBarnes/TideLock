@@ -1,0 +1,49 @@
+# Proxima b
+sSystemName	proxima
+sTideModel	CTL
+#sTideModel	CPL
+bDiscreteRot	1
+
+iVerbose	0
+iDigits		8
+iSciNot		4
+
+bDoLog		1
+
+sUnitMass             solar
+sUnitLength           AU
+sUnitTime             year
+sUnitAngle            degrees
+
+bDoForward            1
+bVarDt                1
+dForwardStopTime      7e9
+dForwardOutputTime    1e3
+sForwardFile          proximabCTL0.4.forward
+dTimestepCoeff        0.01
+dMinValue             1e-10
+
+dPrimaryMass          0.12
+dPrimaryRadius        -0.14
+dPrimarySpinPeriod    -83     # days
+dPrimaryObliquity     0
+dPrimaryRadGyra       0.5
+dPrimaryK2            0.5
+dPrimaryQ             1e6
+dPrimaryTau           -0.01
+
+
+dSecondaryMass	      -1.27
+dSecondaryObliquity   23.5
+dSecondaryK2	      0.3
+dSecondaryRadGyra     0.5
+dSecondarySpinPeriod  -1
+dSecondaryRadius      -1.7
+dSecondaryQ	      12
+dSecondaryTau	      -648
+dSecondaryMaxLockDiff 0.01
+
+dSemi                 0.05
+dEcc                  0.4
+
+sOutputOrder 	      Time Semim Ecce -SecPer SecObli -SecSurfFlux
