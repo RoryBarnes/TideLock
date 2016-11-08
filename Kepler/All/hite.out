@@ -1,0 +1,26 @@
+Habitability Index (w/o ecc): 0.048216
+Habitability Index (w ecc): 0.041864
+
+Stellar log(g) [g/cm^2]: 4.893000
+Stellar Radius [solar]: 0.375000
+Stellar Effective Temp [K]: 3578.000000
+Stellar Mass [solar]: 0.400862
+Stellar Luminosity [solar]: 0.020667
+Number of Planets: 1
+
+Position: 1
+Depth [ppm]: 284.000000
+Transit Duration [hour]: 2.369000
+Impact Parameter: 0.100000
+Period [days]: 12.928442
+Radius [Earth]: 0.689320
+Mass [Earth]: 0.296456
+Semi-Major Axis [AU]: 0.079487
+Circular Duration [hour]: 2.192370
+Transit Duration Anomoly: 1.080566
+Minimum Eccentricity: 0.077330
+Planet's Gravity [m/s^2]: 6.113263
+Maximum Eccentricity: 0.800000
+Maximum Flux [W/m^2]: 280.260464
+Circular Instellation [Earth]: 3.284410
+Flux Constraint: Maximum

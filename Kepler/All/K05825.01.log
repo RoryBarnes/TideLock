@@ -1,0 +1,156 @@
+System Name: K05825.01
+Tidal Model: Constant-Phase-Lag
+Use Discrete Rotation Rate Model: 1
+Integration Method: 4th order Runge-Kutta
+Verbosity Level: 5
+
+--------- Input/Output Units ---------
+
+Mass Units: Solar
+Length Units: AU
+Time Units: Years
+Angle Units: Degrees
+Minimum Value of ecc and obl: 1.00000000e-10
+
+--------- Files ---------
+
+Executable: /Users/rory/src/eqtide/eqtide
+Input: tide.in
+Forward Output: K05825.01.forward
+---------- Integration(s) ----------
+
+Use Variable Timestep: Yes
+Timestep Coefficient: 0.01000000
+
+--------- Forward Integration ---------
+
+Input Time Step: 0.00000000
+Stop Time: 1.50000000e+10
+Output Interval: 1.00000000e+09
+Input Minimum Semi-major Axis: 0.00000000
+Output Order: Time SemiMajorAxis Eccentricity SecPer[days] OrbPeriod[days] SecObliquity 
+
+--------- Primary Body ---------
+
+Primary Mass: 0.78576900
+Primary Radius: 0.00558056
+Primary Tidal Q: 1.00000000e+06
+
+Primary Love Number k2: 0.50000000
+Primary Input Obliquity: 0.00000000
+Primary Input Spin Period: 0.08213552
+Primary Input Spin Frequency: 76.49778111
+Primary Radius of Gyration: 0.50000000
+
+--------- Secondary Body ---------
+
+Secondary Mass: 5.51275487e-05
+Secondary Radius: 9.46229366e-05
+Secondary Tidal Q: 34.00000000
+Secondary Love Number k2: 0.30000000
+Secondary Radius of Gyration: 0.50000000
+Secondary Input Obliquity: 23.50000000
+Secondary Input Spin Period: 0.00273785
+Secondary Input Spin Frequency: 2294.93343338
+Input Angular Size of Primary body: 1.00848318
+
+-------------- Orbit ----------
+
+Input Semi-major Axis: 0.63408900
+Input Orbital Mean Motion: 11.03083713
+Input Orbital Period: 0.56960186
+Input Eccentricity: 0.00000000
+
+--------- Tidal Effects ---------
+
+da/dt: 1.95328641e-16
+de/dt: 0.00000000
+dP/dt: 2.63204675e-16
+
+Derivative of Primary's Spin Rate: -6.14892380e-34
+Primary dObl/dt: -0.00000000
+Primary Equilibrium Rotation Rate: 11.03083713
+Primary Equilibrium Rotation Period: 0.56960186
+Primary Tidal Heat [W]: 6.94537749e+08
+Primary Tidal Surface Flux [W/m^2]: 7.93011513e-11
+Primary Equilibrium Tidal Surface Flux [W/m^2]: 0.00000000
+
+Derivative of Secondary's Spin Rate: -3.06363448e-22
+Secondary dObl/dt: 4.19962014e-19
+Secondary Equilibrium Rotation Rate: 11.03083713
+Secondary Equilibrium Rotation Period: 0.56960186
+Secondary Tidal Heat [W]: 1.21750546e+14
+Secondary Tidal Surface Flux [W/m^2]: 0.04835224
+Secondary Equilibrium Tidal Surface Flux [W/m^2]: 3.71318761e-05
+
+Use Discrete Rotation States: 1
+Discrete Equilibrium Spin Period: 0.56960186
+Continuous Equilibrium Spin Period: 0.56960186
+Primary epsilons: 1 1 1 1 1 1
+Primary Gamma_Rotation: 4.00000000
+Primary Gamma_Orbital: 4.00000000
+Secondary epsilons: 1 1 1 1 1 1
+Secondary Gamma_Rotation: 4.00000000
+Secondary Gamma_Orbital: 4.00000000
+
+----------- Halt ---------
+
+Primary's Minimum Obliquity: -57.29577951
+Secondary's Minimum Obliquity: -57.29577951
+
+--------- Primary Body ---------
+
+Primary Final Obliquity: 0.00000000
+Primary Final Spin Period: 0.08213552
+Primary Final Spin Frequency: 76.49778110
+
+--------- Secondary Body ---------
+
+Secondary Final Obliquity: 44.40603443
+Secondary Final Spin Period: 0.51875313
+Secondary Final Spin Frequency: 12.11209127
+Final Angular Size of Primary body: 1.00848090
+
+-------------- Orbit ----------
+
+Final Semi-major Axis: 0.63409043
+Final Orbital Mean Motion: 11.03079977
+Final Orbital Period: 0.56960379
+Final Eccentricity: 0.00000000
+
+--------- Tidal Effects ---------
+
+da/dt: 4.08752765e-18
+de/dt: -0.00000000
+dP/dt: 5.50793573e-18
+
+Derivative of Primary's Spin Rate: -6.14884050e-34
+Primary dObl/dt: -0.00000000
+Primary Equilibrium Rotation Rate: 11.03079977
+Primary Equilibrium Rotation Period: 0.56960379
+Primary Tidal Heat [W]: 6.94528737e+08
+Primary Tidal Surface Flux [W/m^2]: 7.93001223e-11
+Primary Equilibrium Tidal Surface Flux [W/m^2]: 0.00000000
+
+Derivative of Secondary's Spin Rate: 2.93873605e-39
+Secondary dObl/dt: -1.39634179e-16
+Secondary Equilibrium Rotation Rate: 11.03079977
+Secondary Equilibrium Rotation Period: 0.56960379
+Secondary Tidal Heat [W]: 3.17334117e+11
+Secondary Tidal Surface Flux [W/m^2]: 0.00012603
+Secondary Equilibrium Tidal Surface Flux [W/m^2]: 0.00011434
+
+Use Discrete Rotation States: 1
+Discrete Equilibrium Spin Period: 0.56960379
+Continuous Equilibrium Spin Period: 0.56960379
+Primary epsilons: 1 1 1 1 1 1
+Primary Gamma_Rotation: 4.00000000
+Primary Gamma_Orbital: 4.00000000
+Secondary epsilons: 1 -1 1 1 -1 1
+Secondary Gamma_Rotation: 2.04146365
+Secondary Gamma_Orbital: 0.08292730
+
+----------- Halt ---------
+
+Primary's Minimum Obliquity: -57.29577951
+Secondary's Minimum Obliquity: -57.29577951

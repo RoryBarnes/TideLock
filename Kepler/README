@@ -1,0 +1,5 @@
+This subdirectory contains scripts and data relevant to Kepler detections.
+The All directory contains raw statistics from NExSci, and scripts to process
+the data into Fig. 5 and Table 1. Note that those scripts require both EQTIDE
+and HITE. Also, one script uses Perl (horrors!) as I used it for a previous 
+study. The Kepler22b directory provides the script used to gerenate Fig. 3.

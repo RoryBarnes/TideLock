@@ -1,0 +1,47 @@
+# Calculate timescale for circularization
+sSystemName           K07617.01
+sTideModel            CPL
+bDiscreteRot          1
+
+iVerbose              5
+iDigits               8
+iSciNot               4
+
+bDoLog                1
+
+sUnitMass             solar
+sUnitLength           AU
+sUnitTime             year
+sUnitAngle            degrees
+
+bDoForward            1
+bVarDt                1
+dForwardStopTime      1.5e10
+dForwardOutputTime    1e9
+dTimestepCoeff        0.01
+dMinValue             1e-10
+bHaltSecLock          1
+
+dPrimaryMass          0.400862
+dPrimaryRadius        -0.3750
+dPrimarySpinPeriod    -30
+dPrimaryObliquity     0
+dPrimaryRadGyra       0.5
+dPrimaryK2            0.5
+dPrimaryQ             1e6
+dPrimaryTau           -0.01
+
+dSecondaryMass        -0.296456
+dSecondaryRadius      -0.689320
+dSecondarySpinPeriod  -1
+dSecondaryObliquity   23.5
+dSecondaryK2          0.3
+dSecondaryRadGyra     0.5
+dSecondaryQ           34
+dSecondaryTau         -125
+dSecondaryMaxLockDiff 0.1
+
+dSemi                 0.079487
+dEcc                  0
+
+sOutputOrder          tim semim ecce -secper -orbperiod secobl

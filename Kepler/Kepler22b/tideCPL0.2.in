@@ -1,0 +1,45 @@
+# Time for Kepler-22 b to tidally lock
+sSystemName           kepler22
+sTideModel            CPL
+bDiscreteRot          1
+
+iVerbose              5
+iDigits               8
+iSciNot               4
+
+bDoLog                1
+
+sUnitMass             solar
+sUnitLength           AU
+sUnitTime             year
+sUnitAngle            degrees
+
+bDoForward            1
+bVarDt                1
+dForwardStopTime      1.5e10
+dForwardOutputTime    1e6
+sForwardFile          kepler22bCPL0.2.forward
+dTimestepCoeff        0.01
+dMinValue             1e-10
+
+dPrimaryMass          0.97
+dPrimaryRadius        -0.979
+dPrimarySpinPeriod    -30     # days
+dPrimaryObliquity     0
+dPrimaryRadGyra       0.5
+dPrimaryK2            0.5
+dPrimaryQ             1e6
+
+dSecondaryMass        -23.7
+dSecondaryRadius      -2.38
+dSecondarySpinPeriod  -1
+dSecondaryObliquity   23.5
+dSecondaryK2          0.3
+dSecondaryRadGyra     0.5
+dSecondaryQ           12
+dSecondaryMaxLockDiff 0.01
+
+dSemi                 0.849
+dEcc                  0.2
+
+sOutputOrder          Time Semi Ecc -SecSpinPer SecObl -SecEqSurfFlux

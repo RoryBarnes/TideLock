@@ -1,0 +1,22 @@
+WARNING: sForwardFile is set, but bDoForward not found. Defaulting to "K07617.01.forward".
+WARNING: sIntegration not set, integration method will be RungeKutta4.
+WARNING: bDoLog is True, but sLogFile not found. Defaulting to "K07617.01.log".
+WARNING: dPrimaryRadius is less than 0, assuming solar units.
+WARNING: dPrimarySpinPeriod is less than 0, assuming days.
+WARNING: dPrimaryTau < 0, assuming seconds.
+WARNING: CPL model selected, but dPrimaryTau set.
+WARNING: dSecondaryMass is less than zero, using Earth units.
+WARNING: dSecondaryRadius less than zero, using Earth units.
+WARNING: dSecondarySpinPer is less than 0, assuming days.
+WARNING: dSecondaryTau < 0, assuming seconds.
+WARNING: CPL model selected, but dSecondaryTau set.
+WARNING: Output option SecPer is negative, output units will be days
+WARNING: Output option OrbPeriod is negative, output units will be days
+Input file tide.in successfully read in.
+Input file tide.in successfully verified.
+Output file K07617.01.log successfully verified.
+Read tide.in.
+Log file written.
+Secondary spin locked at 5.95320801e+04 years.
+HALT: Secondary tide-locked at 5.95320801e+04 years.
+Completed forward integration.
