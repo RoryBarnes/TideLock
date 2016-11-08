@@ -1,0 +1,51 @@
+# HZ planet with verying de/dt
+sSystemName           edot
+
+sTideModel            CTL
+dPrimaryTau	      -0.01
+dSecondaryTau         -640
+sForwardFile	      edot.ctl.forward
+
+#sTideModel            CPL
+#dPrimaryQ	      1e6
+#dSecondaryQ           12
+#sForwardFile	      edot.cpl.forward
+
+iVerbose              5
+iDigits               8
+iSciNot               4
+
+bDoLog                1
+
+sUnitMass             solar
+sUnitLength           AU
+sUnitTime             year
+sUnitAngle            degrees
+
+dPrimaryMass          -0.1     	# solar
+sPrimaryMassRad       Baraffe15
+dPrimarySpinPeriod    -30     	# days
+dPrimaryObliquity     0
+dPrimaryRadGyra       0.5
+dPrimaryK2            1
+
+dSecondaryMass        -1
+dSecondaryRadius      -1
+dSecondarySpinPeriod  -1
+dSecondaryObliquity   23.5
+dSecondaryRadGyra     0.5
+dSecondaryK2          0.3
+
+dSemi                 0.05
+dEcc                  0.2
+
+bDoForward            1
+bVarDt                1
+dForwardStopTime      1e10
+dForwardOutputTime    1e6
+dTimestepCoeff        0.1
+dMinValue             1e-10
+
+dSecondaryMaxLockDiff 0.01
+
+sOutputOrder	Time Semi Ecc SecObl SecSpinRate -SecPer MeanMotion SecSurfFlux -DeDt

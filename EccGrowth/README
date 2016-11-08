@@ -1,0 +1,9 @@
+This directory contains scripts and intermediate data to produce Figs. 7 
+and 8 in the manuscript. Note that for the four-panel evolution plot I ran
+simulations twice, once in which the dOutputTime was set to 1e2 and 
+dStopTime was set to 1e7, and the other where they were 1e6 and and 1e10, 
+respectively. I then manually connected the two output files. I did this
+because the dynamic range of the plot is 7 orders of magnitude, but I 
+didn't want to use just a 100 year output the whole time. Unfortunately, the
+combined file is too large for GitHub, so I have only provided a tide.in
+files that can be used to generate the data files.
