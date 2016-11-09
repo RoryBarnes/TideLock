@@ -1,0 +1,6 @@
+Generate Fig. 11 in the manuscript, which compares different tidal locking
+limits in relation to the habitable zone. tlockCPL.out should be the same as
+TLock/CPL/p10o0/tlock0.out, which corresponds to a 0.1 Earth-mass planet with
+an initially slow spin period. tlockCTL.out should be the same as 
+TLock/CTL/p0.3o60/tlock2.out, corrseponding to a 10 Earth-mass planet with a
+rapid initial rotation.
