@@ -1,0 +1,5 @@
+This directory contains the scripts and intermediate data to produce Fig. 6.
+Each figure is produced in a single subdirectory. Note that these scripts 
+require the EQTIDE software package. In order to make the contour lines 
+smooth, I had to run a large number of simulations, so be ready for that, 
+should you rerun them.
