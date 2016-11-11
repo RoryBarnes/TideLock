@@ -1,0 +1,3 @@
+This directory contains the scripts, input file for eqtide, and its output to
+produce Fig. 2 in the manuscript. This script relies on the EQTIDE software
+packacge which is publicly available at https://github.com/RoryBarnes/EqTide.
