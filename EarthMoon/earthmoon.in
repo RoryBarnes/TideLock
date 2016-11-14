@@ -1,0 +1,66 @@
+# Reverse evolution of Earth-Moon system
+sSystemName		earthmoon	# System Name
+sTideModel		cpl		# Tidal Model
+#sTideModel		ctl		# Tidal Model
+sIntegration		RungeKutta
+
+# Units
+sUnitMass		Earth		# Input/Output Mass Units
+sUnitLength		Earth		# Input/Output Length Units
+sUnitTime		Days		# Input/Output Time Units
+sUnitAngle		Degrees		# Input/Output Angle Units
+
+# Output Precision
+iDigits			8		# Number of Digits after Decmial
+iSciNot			4		# Log_10 to change to Scientific Notation
+
+# Verbosity
+iVerbose		5		# Verbosity Level, 0=none, 5=all
+bDoLog			1		# Write a log file?
+sLogFile		earth.log	# Log file name
+
+# Properties of primary
+dPrimaryMass		1		# Mass of central body (negative for solar units)
+dPrimaryRadius		1		# Radius of central body (negative for solar units)
+# Toggle betweed tidal response options
+dPrimaryQ		12		# Tidal Q of central body
+#dPrimaryQ		34		# Tidal Q of central body
+#dPrimaryTau		-125		# Time lag of central body (negative for seconds)
+dPrimaryTau		-640		# Time lag of central body (negative for seconds)
+dPrimaryK2		0.299		# Love number of degree 2 for central body
+dPrimarySpinPeriod	1		# Spin period of central body
+# Toggle between Earth's current obliquity
+#dPrimaryObliquity	0
+dPrimaryObliquity	23.5
+
+# Properties of secondary
+dSecondaryMass		-0.0123		# Mass of orbiter (negative for Earth units)
+dSecondaryRadius	-0.273		# Radius of orbiter (negative for Earth units)
+dSecondaryQ		50		# Tidal Q of orbiter
+dSecondaryTau		-64		# Time lag for orbiter (negative for seconds)
+dSecondaryK2		0.3		# Love number of degree 2 for orbiter
+# Toggle between different lunar obliquities
+#dSecondaryObliquity	0		# Orbiter's Obliquity
+dSecondaryObliquity	6.68		# Orbiter's Obliquity
+bSecondaryForceEqSpin	1
+
+# Properties of Orbit
+dSemi			60.32		# Semi-major axis
+# Toggle between different current eccentricities
+#dEcc			0		# Eccentricity
+dEcc			0.0549		# Eccentricity
+
+# Backward Integration
+bDoBackward		1		# Do backward integration?
+dBackwardTimeStep	100		# Backward time step
+dBackwardStopTime	365.25e10	# Backward integration time
+dBackwardOutputTime	365.25e7	# Backward output interval
+bVarDt			1		# Use variable timestepping?
+dTimestepCoeff		0.01		# Fraction of dynamical timestep
+dHaltMinSemi		5
+dMinValue		1e-5
+
+# Output Order
+sOutputOrder		-Time Semi Ecc -PriPer PriObl -SecPer SecObl -OrbPeriod 
+
+
