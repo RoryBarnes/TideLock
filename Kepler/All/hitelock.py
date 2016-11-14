@@ -69,7 +69,7 @@ plt.xlabel('Time to Tidally Lock (Gyr)',fontsize=20)
 plt.xscale('log')
 
 for i in range(nlines):
-    plt.plot(ctlearth[i],hite[i],'o',color='0.75',markersize=(3*plrad[i]))
+    plt.plot(ctlearth[i],hite[i],'o',color='0.5',markersize=(3*plrad[i]))
     plt.plot(cplearth[i],hite[i],'ko',markersize=(3*plrad[i]))
     
 plt.savefig('hitelock.eps')
