@@ -197,6 +197,6 @@ plt.plot(tr,mcol,color='r',linestyle='dashed',linewidth=3,label='Kasting et al. 
 plt.legend(loc='upper left')
 
 plt.tight_layout()
-plt.savefig('hzplot.ps')
+plt.savefig('hzplot.eps')
 
 
