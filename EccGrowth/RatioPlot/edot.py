@@ -150,4 +150,4 @@ plt.legend(loc='lower right',frameon='True')
 plt.legend().get_frame().set_edgecolor('k')
 
 plt.tight_layout()
-plt.savefig('edot.ps')
+plt.savefig('edot.eps')
