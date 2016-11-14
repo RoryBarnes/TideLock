@@ -1,15 +1,7 @@
 # HZ planet with verying de/dt
 sSystemName           edot
-
-sTideModel            CTL
-dPrimaryTau	      -0.01
-dSecondaryTau         -640
-sForwardFile	      edot.ctl.forward
-
-#sTideModel            CPL
-#dPrimaryQ	      1e6
-#dSecondaryQ           12
-#sForwardFile	      edot.cpl.forward
+#sTideModel            CTL
+sTideModel            CPL
 
 iVerbose              5
 iDigits               8
@@ -28,6 +20,8 @@ dPrimarySpinPeriod    -30     	# days
 dPrimaryObliquity     0
 dPrimaryRadGyra       0.5
 dPrimaryK2            1
+dPrimaryQ	      1e6
+#dPrimaryTau	      -0.01
 
 dSecondaryMass        -1
 dSecondaryRadius      -1
@@ -35,6 +29,8 @@ dSecondarySpinPeriod  -1
 dSecondaryObliquity   23.5
 dSecondaryRadGyra     0.5
 dSecondaryK2          0.3
+#dSecondaryTau         -640
+dSecondaryQ           12
 
 dSemi                 0.05
 dEcc                  0.2
@@ -45,7 +41,9 @@ dForwardStopTime      1e10
 dForwardOutputTime    1e6
 dTimestepCoeff        0.1
 dMinValue             1e-10
+#sForwardFile	      edot.ctl.forward
+sForwardFile	      edot.cpl.forward
 
-dSecondaryMaxLockDiff 0.01
+dSecondaryMaxLockDiff 0.1
 
 sOutputOrder	Time Semi Ecc SecObl SecSpinRate -SecPer MeanMotion SecSurfFlux -DeDt

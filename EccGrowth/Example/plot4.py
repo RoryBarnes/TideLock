@@ -149,4 +149,4 @@ ax[1,1].set_ylim([0,15])
 #plt.figure(figsize=(6.5,9), dpi=200)
 plt.tight_layout()
 plt.rcParams["figure.figsize"] = PanelSize
-plt.savefig('EccGrowth.ps')
+plt.savefig('EccGrowth.eps')
