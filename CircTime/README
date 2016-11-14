@@ -1,0 +1,3 @@
+This subdirectory contains the scripts to plot the time for a potentially
+habitable planet to circularize from e=0.3 to e=0.01. The intermeiate data 
+are included, as well as the .eps files.
