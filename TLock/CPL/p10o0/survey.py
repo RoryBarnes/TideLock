@@ -1,35 +1,96 @@
-#!/usr/bin/python
+# SURVEY.PY
+#
+# Written by Rory Barnes
+#
+# Calculate the time for a planet to tidally lock over a wide range of orbits 
+# and stellar masses. This script creates output files for three different 
+# planetary masses and creates the .eps file that goes into the manuscript. 
+# If you have already run this script, use tlock.py to create the postscript
+# and avoid rerunning all the trials again.
+#
+# This script requires the EQTIDE software package, publicly available at
+# https://github.com/RoryBarnes/EqTide. To run this script:
+#
+# > python survey.py
+#
+# This script is specifically designed for the case of planets with initial
+# spin periods of 10 days, initial obliquities of 0 degrees, and adhere to the
+# CPL model.
+#
 import numpy as np
 import subprocess as subp
 import string
 
-MSUN = 1.98892e33
-AUCM = 1.49598e13
-RSUN = 6.955e10
-LSUN = 3.827e33
+MSUN = 1.988416e33 	# Stellar mass in grams from Prsa et al. 2016
+AUCM = 1.49598e13	# Astronomical Unit in cm recommended by the IAU
+RSUN = 6.957e10     	# Stellar radius in cm from Prsa et al. 2016
+LSUN = 3.828e33		# Nominal solar luminosity in cgs recommended by the IAU
 PI = 3.1415926535
-SIGMA =5.67e-5
-CPL=0
-CTL=1
+SIGMA = 5.6704e-5	# Stefan-Boltzmann constant in cgs units
 
-model=CPL
+exe="/Users/rory/bin/eqtide" 	# Location of EQTIDE
+logfile="log"                   # EQTIDE log file
+tidefile="tide.in"              # Name of input file for EQTIDE
 
-mp=0.1,1,10
-rp=np.power(mp,0.274)
-rp[0]=np.power(mp[0],0.306)
+# Select tidal model. Options are CPL or CTL
+model='CPL'
 
-msmin=0.05
-msmax=1.3
-dm=0.001
+# Base output name for plots and output files. Figures will be named
+# (base + model + "." + extension, e.g. tlockCPL.png. Data files will be
+# named (base + model + index + ".out")
+base='tlock'
 
-amin=0.05
-amax=1.8
-da=0.001
+# Parameter ranges
+nmp=3           # Number of planetary masses to consider
+mp=0.1,1,10  	# Planetary masses in Earth masses
 
-per=10
-obl=0
-ecc=0
+msmin=0.05	# Minimum stellar mass in solar units
+msmax=1.3	# Maximum stellar mass in solar units
+dm=0.001	# Increment in stellar mass in solar units
 
+amin=0.05	# Minimum semi-major axis in AU
+amax=1.8	# Maximum semi-major axis in AU
+da=0.001	# Increment in semi-major axis in AU
+
+# Planetary properties
+plper=10	# Initial planetary rotation period in days
+plobl=0		# Initial planetary obliquity in degrees
+plk2=0.5	# Planet's k_2
+plrg=0.5	# Planet's radius of gyration
+plq=12		# Planet's tidal quality factor
+pltau=640	# Planet's tidal time lag in seconds
+
+# Stellar properties
+stper=30	# Star's initial rotation period in days
+stobl=0		# Star's initial obliquity in degrees
+stk2=0.5	# Star's k_2
+strg=0.5	# Star's radius of gyration
+stq=1e6		# Star's tidal quality factor
+sttau=0.01	# Star's tidal time lag in seconds
+
+ecc=0		# Initial orbital eccentricity
+
+# Integration Parameters
+tstop=1e10      # Total time to integrate in years
+tout=1e9        # Output interval in years
+tcoeff=1e-2     # Timestep coefficient for dynamical timestepping
+minval=1e-10    # Minimum value, see EQTIDE help 
+
+# Plotting 
+plot='eps'        # Select plot format. Options are eps, png or screen
+#plot='screen'     # Select plot format. Options are eps, png or screen
+xlim=[0,1.75]     # x-axis limits for plot
+ylim=[0.08,1.25]  # y-axis limits for plot
+
+# Halting condition: SecLock for tidal locking; MinEcc for e=0.01
+halt='SecLock'
+#halt='MinEcc'
+
+#
+####### AUTOMATIC FROM HERE #######
+#
+
+# HZ boundaries from Kopparapu et al. (2013)
 def HabitableZone(lum,teff,lim):
     seff = [0 for j in range(6)]
     seffsun = [0 for j in range(6)]
@@ -77,66 +138,66 @@ def HabitableZone(lum,teff,lim):
 
     for j in range(6):
         seff[j] = seffsun[j] + aa[j]*tstar + b[j]*tstar**2 + c[j]*tstar**3 + d[j]*tstar**4
+        # Assign HZ limit to lim array
         lim[j] = np.sqrt(lum/seff[j])
 
-def RadLumBoyajian12(r):
-    l = -3.5822 + 6.8639*r - 7.185*r**2 + 4.5169*r**3
-    return 10**l
-
+# stellar mass-luminosity relation from Baraffe et al. (2015). Fit by R. Barnes.
 def MassLumBaraffe15(m):
     x=np.log10(m)
     l=-0.04941 + 6.6496*x + 8.7299*x**2 + 5.2076*x**3
     return 10**l
 
+# Stellar mass-radius relation from Baraffe et al. (2015). Fit by R. Barnes.
 def MassRadBaraffe15(m):
+    # Check against dBaraffe15_MassRad in util.c in the EQTIDE package
     return 0.003269 + 1.304*m - 1.312*m**2 + 1.055*m**3
 
-def MassLumScalo07(m):
-    x=np.log10(m)
-    l=4.101*x**3 + 8.162*x**2 + 7.108*x + 0.065
-    return 10**l
-
-def MassLumWiki(m):
-    if m < 0.43:
-        l=0.23*m**2.3
+# Planetary radius from Sotin et al. (2007)
+def MassRadSotin07(m):
+    # Scaling law is broken at 1 M_Earth
+    if (m >= 1):
+        return np.power(m,0.274)
     else:
-        l=m**4
-    return l
+        return np.power(m,0.306) 	
 
-def MassRadWiki(m):
-     return m**0.8
+#
+######## MAIN PROGRAM ############
+#
 
+# Calculate planetary radius in Earth radii
+rp = [MassRadSotin07(mp[i]) for i in range(nmp)]
 
-exe="/Users/rory/bin/eqtide"
+abin=int((amax-amin)/da)    # delta semi-major axis 
+mbin=int((msmax-msmin)/dm)  # delta stellar mass 
 
-### Automatic from here ###
+acol=[(amin + i*da) for i in range(abin)]  # vector of semi-major axis values  
+mcol=[(msmin + i*dm) for i in range(mbin)] # vector of stellar mass values
 
-abin=int((amax-amin)/da)
-mbin=int((msmax-msmin)/dm)
+# Matrix of times to tidally lock. The first dimension is planetary mass,
+# second dimension is stellar mass, third dimension is semi-major axis
+t=[[[0 for i in range(abin)] for j in range(mbin)] for k in range(nmp)]
 
-acol=[0 for i in range(abin)]
-mcol=[0 for i in range(mbin)]
-t=[[[0 for i in range(abin)] for j in range(mbin)] for k in range(3)]
+ttot=0      # Total integrated time
 
-ttot=0
-for imp in range(3):
+cmd = (exe+" "+tidefile+" >& "+logfile) # Command to run EQTIDE
+
+# Loop over planetary masses, stellar masses and semi-major axes and
+# calculate time to tidally lock.
+for imp in range(nmp):
     for im in range(mbin):
-        mcol[im] = msmin + im*dm
-    
+
         print("Stellar Mass ("+repr(imp)+","+repr(im)+"): " + repr(mcol[im]))
         for ia in range(abin):
-            a = amin + ia*da
-            acol[ia] = a
-        
+            a = acol[ia]
+            
+            # Write input file for eqtide
             file=open('tide.in','w')
             file.write("# Calculate timescale for tidal lock\n")
             file.write("sSystemName           tidelock\n")
-            if model == CPL:
-                file.write("sTideModel            CPL\n")
-                file.write("bDiscreteRot          1\n")
-            if model == CTL:
-                file.write("sTideModel           CTL\n")
+            file.write("bDiscreteRot          1\n")
+            file.write("sTideModel            "+model+"\n")
             file.write("\n")
+            # Don't change verbosity as EQTIDE's STDOUT is scanned later!
             file.write("iVerbose              5\n")
             file.write("iDigits               8\n")
             file.write("iSciNot               4\n")
@@ -150,33 +211,35 @@ for imp in range(3):
             file.write("\n")
             file.write("bDoForward            1\n")
             file.write("bVarDt                1\n")
-            file.write("dForwardStopTime      1e10\n")
-            file.write("dForwardOutputTime    1e9\n")
-            file.write("dTimestepCoeff        0.01\n")
-            file.write("dMinValue             1e-10\n")
-            file.write("bHaltSecLock          1\n")
+            file.write("dForwardStopTime      "+repr(tstop)+"\n")
+            file.write("dForwardOutputTime    "+repr(tout)+"\n")
+            file.write("dTimestepCoeff        "+repr(tcoeff)+"\n")
+            file.write("dMinValue             "+repr(minval)+"\n")
+            if (halt == "SecLock"):
+                file.write("bHaltSecLock          1\n")
+            elif (halt == "MinEcc"):
+                file.write("dHaltMinEcc          0.01\n")
+            else:
+                print("ERROR: Unknown halt condition: "+halt+"!\n")
+                exit();
             file.write("\n")
             file.write("dPrimaryMass          " + repr(mcol[im]) + "     # solar\n")
             file.write("sPrimaryMassRad       Baraffe15\n")
-            file.write("dPrimarySpinPeriod    -30     # days\n")
-            file.write("dPrimaryObliquity     0\n")
-            file.write("dPrimaryRadGyra       0.5\n")
-            file.write("dPrimaryK2            0.5\n")
-            if model == CPL:
-                file.write("dPrimaryQ             1e6\n")
-            if model == CTL:
-                file.write("dPrimaryTau          -0.01\n")
+            file.write("dPrimarySpinPeriod    -"+repr(stper)+"     # days\n")
+            file.write("dPrimaryObliquity     "+repr(stobl)+"\n")
+            file.write("dPrimaryRadGyra       "+repr(strg)+"\n")
+            file.write("dPrimaryK2            "+repr(stk2)+"\n")
+            file.write("dPrimaryQ             "+repr(stq)+"\n")
+            file.write("dPrimaryTau          -"+repr(sttau)+"\n")
             file.write("\n")
             file.write("dSecondaryMass        -" + repr(mp[imp]) + "\n")
             file.write("dSecondaryRadius      -" + repr(rp[imp]) + "\n")
-            file.write("dSecondarySpinPeriod  -" + repr(per) + "\n")
-            file.write("dSecondaryObliquity  " + repr(obl) + "\n")
-            file.write("dSecondaryK2          0.5\n")
-            file.write("dSecondaryRadGyra     0.5\n")
-            if model == CPL:
-                file.write("dSecondaryQ           12\n")
-            if model == CTL:
-                file.write("dSecondaryTau        -648\n")
+            file.write("dSecondarySpinPeriod  -" + repr(plper) + "\n")
+            file.write("dSecondaryObliquity   " + repr(plobl) + "\n")
+            file.write("dSecondaryK2          "+repr(plk2)+"\n")
+            file.write("dSecondaryRadGyra     "+repr(plrg)+"\n")
+            file.write("dSecondaryQ           "+repr(plq)+"\n")
+            file.write("dSecondaryTau        -"+repr(pltau)+"\n")
             file.write("dSecondaryMaxLockDiff 0.1\n")
             file.write("\n")
             file.write("dSemi                 " + repr(a) + "\n")
@@ -186,66 +249,62 @@ for imp in range(3):
             
             file.close()
             
-            subp.call("/Users/rory/bin/eqtide tide.in >& log", shell=True)
+            # Run eqtide, dump output into file log
+            subp.call(cmd, shell=True)
             
-            log=open("log","r")
+            log=open(logfile,"r")
             
+            # Search for time to tidally lock
             found=0
             for line in log:
                 words=string.split(line," ")
                 if words[0] == "HALT:":
                     t[imp][im][ia]=float(words[4])/1e9
                     found=1
-                    
+
+            # If the code did not halt, then the planet did not lock
             if found == 0:
-                t[imp][im][ia]=10.1
+                # Add 0.1 Gyr to locking timescale to produce prettier plots
+                t[imp][im][ia]=tstop+0.1 
                         
             ttot += t[imp][im][ia]
 
-
-for imp in range(3):
-    outname='tidelock'+repr(imp)+'.out'
+# Dump data into output files
+for imp in range(nmp):
+    outname=base+model+repr(imp)+'.out'
     outf=open(outname,"w")
     for im in range(mbin):
         for ia in range(abin):
             outf.write(repr(t[imp][im][ia])+" ")
         outf.write("\n")
 
-#print(t)
 print('Total integrated time: '+repr(ttot)+' Gyr')
 
-import matplotlib.pyplot as plt
-
-#rs=mcol # From Boyajian et al. (2012)
-l=[0 for i in range(mbin)]
-rs=[0 for i in range(mbin)]
-teff=[0 for i in range(mbin)]
+# Calculate HZ boundaries
+l=[0 for i in range(mbin)]    # Stellar luminosity
+rs=[0 for i in range(mbin)]   # Stellar radius
+teff=[0 for i in range(mbin)] # Stellar effective temperature
 rv=[0 for i in range(mbin)]   # Recent Venus
 mg=[0 for i in range(mbin)]   # Moist Greenhouse
 maxg=[0 for i in range(mbin)] # Maximum Greenhouse
 em=[0 for i in range(mbin)]   # Early Mars
-lim=[0 for j in range(6)]
-
-#print(rs)
+lim=[0 for j in range(6)]     # HZ limits
 
 for im in range(mbin):
-    #print(im)
-    #l[im] = RadLumBoyajian12(rs[im])
-    #l[im] = MassLumScalo07(mcol[im])
-    #l[im] = MassLumWiki(mcol[im])
-    #rs[im] = MassRadWiki(mcol[im])
     l[im] = MassLumBaraffe15(mcol[im])
     rs[im] = MassRadBaraffe15(mcol[im])
-    #print(mcol[im],rs[im],l[im])
     teff[im]=((l[im]*LSUN)/(4*PI*SIGMA*(rs[im]*RSUN)**2))**0.25
     HabitableZone(l[im],teff[im],lim)
     rv[im] = lim[0]
     mg[im] = lim[2]
     maxg[im] = lim[3]
     em[im] = lim[4]
-    print(mcol[im],rs[im],l[im],mg[im],maxg[im])
 
-#### Now plot #####
+# 
+######### PLOT ###########
+#
+
+import matplotlib.pyplot as plt
 
 plt.figure(figsize=(6.5,9), dpi=200)
 
@@ -253,15 +312,9 @@ fbk = {'lw':0.0, 'edgecolor':None}
 
 plt.xlabel('Semi-Major Axis (AU)',fontsize=20)
 plt.ylabel('Stellar Mass (M$_\odot$)',fontsize=20)
-plt.tick_params(axis='both', labelsize=20)
 
-xt=[0,0.25,0.5,0.75,1,1.25]
-yt=[0,0.25,0.5,0.75,1,1.25]
-plt.xticks(xt)
-plt.yticks(yt)
 plt.fill_betweenx(mcol,rv,em,facecolor='0.85', **fbk)
 plt.fill_betweenx(mcol,mg,maxg,facecolor='0.75', **fbk)
-#plt.plot(rv,mcol,color='yellow',linewidth=2)
 
 ContSet0 = plt.contour(acol,mcol,t[0],3,colors='black',linestyles='dashed',
                   levels=[1,5,10],linewidths=3)
@@ -275,11 +328,35 @@ ContSet2 = plt.contour(acol,mcol,t[2],3,colors='black',linestyles='dotted',
                   levels=[1,5,10],linewidths=3)
 plt.clabel(ContSet2,fmt="%.0f",inline=True,fontsize=18)
 
+xt=[0,0.25,0.5,0.75,1,1.25,1.5]
+yt=[0,0.25,0.5,0.75,1,1.25,1.5]
+plt.xticks(xt)
+plt.yticks(yt)
+plt.xlim(xlim)
+plt.ylim(ylim)
+plt.tick_params(axis='both',labelsize=20)
+plt.tick_params(
+    axis='x',          
+    which='both',      
+    bottom='on',       
+    top='on',          
+    labelbottom='on')  
+plt.tick_params(
+    axis='y',          
+    which='both',      
+    left='on',         
+    right='on',        
+    labelleft='on')    
 
-plt.xlim(0,1.25)
-plt.ylim(0.08,1.25)
-
-plt.tight_layout()
-plt.savefig('cpl_p10o0.png')
-
-#plt.show()
+if (plot == 'eps'):
+    plt.tight_layout()
+    plotfile=(base+model+"."+plot)
+    plt.savefig(plotfile)
+elif (plot == 'png'):
+    plt.tight_layout()
+    plotfile=(base+model+"."+plot)
+    plt.savefig(plotfile)
+elif (plot == 'screen'):
+    plt.show()
+else:
+    print("ERROR: unknown plot type: "+plot+". Options are ps, png, or screen.\n")
