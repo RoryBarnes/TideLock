@@ -175,13 +175,27 @@ plt.figure(figsize=(6.5,9), dpi=200)
 plt.xlabel('Semi-Major Axis (AU)',fontsize=20)
 plt.ylabel('Stellar Mass (M$_\odot$)',fontsize=20)
 plt.tick_params(axis='both', labelsize=20)
+plt.tick_params(
+    axis='x',          
+    which='both',      
+    bottom='on',       
+    top='on',          
+    labelbottom='on')  
+plt.tick_params(
+    axis='y',          
+    which='both',      
+    left='on',         
+    right='on',        
+    labelleft='on')    
 
 xt=[0.01,0.1,1]
-yt=[0.1,1]
+yt=[0.1,0.5,1]
+xl=['0.01','0.1','1']
+yl=['0.1','0.5','1']
 plt.xscale('log')
 plt.yscale('log')
-plt.xticks(xt)
-plt.yticks(yt)
+plt.xticks(xt,xl)
+plt.yticks(yt,yl)
 plt.fill_betweenx(mcol,rv,em,color='0.85', **fbk)
 plt.fill_betweenx(mcol,mg,maxg,color='0.75', **fbk)
 
@@ -195,6 +209,7 @@ plt.plot(rctl,mcol,color='k',linestyle='dotted',linewidth=3,label='CTL, short, 1
 plt.plot(tr,mcol,color='r',linestyle='dashed',linewidth=3,label='Kasting et al. (1993)')
 
 plt.legend(loc='upper left')
+plt.legend().get_frame().set_edgecolor('k')
 
 plt.tight_layout()
 plt.savefig('hzplot.eps')
