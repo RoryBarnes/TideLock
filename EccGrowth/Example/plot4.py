@@ -97,6 +97,18 @@ f, ax = plt.subplots(2,2,figsize=(8.5,11))
 # First Column
 
 ax[0,0].tick_params(axis='both', labelsize=FontSize)
+ax[0,0].tick_params(
+    axis='x',          
+    which='both',      
+    bottom='on',       
+    top='on',          
+    labelbottom='on')  
+ax[0,0].tick_params(
+    axis='y',          
+    which='both',      
+    left='on',         
+    right='on',        
+    labelleft='on')    
 ax[0,0].set_ylabel('Eccentricity', fontsize=FontSize)
 ax[0,0].set_xlabel('Time (Yr)',fontsize=FontSize)
 ax[0,0].set_xscale('log')
@@ -108,6 +120,18 @@ ax[0,0].legend()
 ax[0,0].legend().get_frame().set_edgecolor('k')
 
 ax[0,1].tick_params(axis='both', labelsize=FontSize)
+ax[0,1].tick_params(
+    axis='x',          
+    which='both',      
+    bottom='on',       
+    top='on',          
+    labelbottom='on')  
+ax[0,1].tick_params(
+    axis='y',          
+    which='both',      
+    left='on',         
+    right='on',        
+    labelleft='on')    
 ax[0,1].set_ylabel('$\Omega_2$/n', fontsize=FontSize)
 ax[0,1].set_xlabel('Time (Yr)',fontsize=FontSize)
 ax[0,1].plot(timeCPL,ratioCPL,linewidth=2,color='k',linestyle='-')
@@ -128,6 +152,18 @@ y[0] = orbper
 y[1] = orbper
 
 ax[1,0].tick_params(axis='both', labelsize=FontSize)
+ax[1,0].tick_params(
+    axis='x',          
+    which='both',      
+    bottom='on',       
+    top='on',          
+    labelbottom='on')  
+ax[1,0].tick_params(
+    axis='y',          
+    which='both',      
+    left='on',         
+    right='on',        
+    labelleft='on')    
 ax[1,0].set_ylabel('de/dt (/Gyr)', fontsize=FontSize)
 ax[1,0].set_xlabel('Time (Yr)',fontsize=FontSize)
 ax[1,0].set_xscale('log')
@@ -137,6 +173,18 @@ ax[1,0].set_xlim([1e3,1e10])
 ax[1,0].set_ylim([-0.5,0.5])
 
 ax[1,1].tick_params(axis='both', labelsize=FontSize)
+ax[1,1].tick_params(
+    axis='x',          
+    which='both',      
+    bottom='on',       
+    top='on',          
+    labelbottom='on')  
+ax[1,1].tick_params(
+    axis='y',          
+    which='both',      
+    left='on',         
+    right='on',        
+    labelleft='on')    
 ax[1,1].set_ylabel('Rotation Period (d)', fontsize=FontSize)
 ax[1,1].set_xlabel('Time (Yr)',fontsize=FontSize)
 ax[1,1].plot(timeCPL,SecPerCPL,linewidth=2,color='k',linestyle='-')
@@ -146,7 +194,6 @@ ax[1,1].set_xscale('log')
 ax[1,1].set_xlim([1e3,1e10])
 ax[1,1].set_ylim([0,15])
 
-#plt.figure(figsize=(6.5,9), dpi=200)
 plt.tight_layout()
 plt.rcParams["figure.figsize"] = PanelSize
 plt.savefig('EccGrowth.eps')
