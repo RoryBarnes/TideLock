@@ -8,7 +8,7 @@
 import numpy as np
 import string as str
 import matplotlib.pyplot as plt
-import matplotlib.lines as lines
+#import matplotlib.lines as lines
 
 def AddCurve(infile,ls,col,lbl):
 
@@ -45,6 +45,18 @@ plt.yscale('log')
 plt.xlim(0,13.7)
 plt.ylim(1,365)
 plt.tick_params(axis='both', labelsize=20)
+plt.tick_params(
+    axis='x',          
+    which='both',      
+    bottom='on',       
+    top='on',          
+    labelbottom='on')  
+plt.tick_params(
+    axis='y',          
+    which='both',      
+    left='on',         
+    right='on',        
+    labelleft='on')    
 plt.ylabel('Rotation Period (d)', fontsize=20)
 plt.xlabel('Time (Gyr)',fontsize=20)
 
@@ -61,6 +73,7 @@ AddCurve('kepler22bCTL0.3.forward',':','c','e=0.3')
 AddCurve('kepler22bCTL0.4.forward',':','m','e=0.4')
 
 plt.legend(loc='upper left')
+plt.legend().get_frame().set_edgecolor('k')
 
 plt.text(10.8,150,'CPL',fontsize=20)
 plt.text(10.8,2,'CTL',fontsize=20)
