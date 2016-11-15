@@ -53,6 +53,7 @@ def AddCurve(infile,ls,col,lbl):
 #### Plot ####
 
 plt.tick_params(axis='both', labelsize=15)
+
 plt.xlabel('Apparent J Magnitude', fontsize=20)
 plt.ylabel('Max. Time to Tidally Lock (Years)',fontsize=20)
 
@@ -64,12 +65,48 @@ for j in range(3):
 
 ax[0].set_ylim(1,25)
 ax[0].set_ylabel('Rotation Period (d)', fontsize=20)
+ax[0].tick_params(
+    axis='x',          
+    which='both',      
+    bottom='on',       
+    top='on',          
+    labelbottom='on')  
+ax[0].tick_params(
+    axis='y',          
+    which='both',      
+    left='on',         
+    right='on',        
+    labelleft='on')    
 
 ax[1].set_ylim(-0.01,0.42)
 ax[1].set_ylabel('Eccentricity', fontsize=20)
+ax[1].tick_params(
+    axis='x',          
+    which='both',      
+    bottom='on',       
+    top='on',          
+    labelbottom='on')  
+ax[1].tick_params(
+    axis='y',          
+    which='both',      
+    left='on',         
+    right='on',        
+    labelleft='on')    
 
-ax[2].set_ylim(0.04,0.075)
+ax[2].set_ylim(0.038,0.075)
 ax[2].set_ylabel('Semi-major Axis (AU)', fontsize=20)
+ax[2].tick_params(
+    axis='x',          
+    which='both',      
+    bottom='on',       
+    top='on',          
+    labelbottom='on')  
+ax[2].tick_params(
+    axis='y',          
+    which='both',      
+    left='on',         
+    right='on',        
+    labelleft='on')    
 
 AddCurve('proximabCTL0.forward',':','k','e=0')
 AddCurve('proximabCTL0.1.forward',':','b','e=0.1')
@@ -84,6 +121,7 @@ AddCurve('proximabCPL0.3.forward','-','c','e=0.3')
 AddCurve('proximabCPL0.4.forward','-','m','e=0.4')
 
 ax[0].legend(loc='upper left')
+ax[0].legend().get_frame().set_edgecolor('k')
 
 ax[0].plot([3e4,1e5],[22,22],color='k',lw=2)
 ax[0].plot([3e4,1e5],[19,19],ls=':',color='k',lw=2)
