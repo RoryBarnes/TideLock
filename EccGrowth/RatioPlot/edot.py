@@ -141,11 +141,25 @@ plt.figure(figsize=(6.5,9), dpi=200)
 plt.xlim(0,5)
 plt.ylim(-0.3,0.3)
 plt.tick_params(axis='both', labelsize=20)
+plt.tick_params(
+    axis='x',          
+    which='both',      
+    bottom='on',       
+    top='on',          
+    labelbottom='on')  
+plt.tick_params(
+    axis='y',          
+    which='both',      
+    left='on',         
+    right='on',        
+    labelleft='on')    
+
 plt.xlabel('$\Omega_2$/n',fontsize=20)
 plt.ylabel('de/dt (/Gyr)',fontsize=20)
 plt.plot(ratio,edot[0],linestyle='-',color='k',linewidth=2,label='CPL')
 plt.plot(ratio,edot[1],linestyle='dashed',color='k',linewidth=2,label='CTL')
 plt.plot([0,100],[0,0],linestyle=':',color='k')
+
 plt.legend(loc='lower right',frameon='True')
 plt.legend().get_frame().set_edgecolor('k')
 
