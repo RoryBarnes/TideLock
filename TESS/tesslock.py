@@ -113,6 +113,18 @@ plt.figure(figsize=(8,9), dpi=200)
 plt.xlim(6,12)
 plt.ylim(1e4,2e10)
 plt.tick_params(axis='both', labelsize=15)
+plt.tick_params(
+    axis='x',          
+    which='both',      
+    bottom='on',       
+    top='on',          
+    labelbottom='on')  
+plt.tick_params(
+    axis='y',          
+    which='both',      
+    left='on',         
+    right='on',        
+    labelleft='on')    
 plt.xlabel('Apparent J Magnitude', fontsize=20)
 plt.ylabel('Max Time to Tidally Lock (Years)',fontsize=20)
 plt.yscale('log')
