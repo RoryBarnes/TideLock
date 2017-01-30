@@ -11,6 +11,8 @@ import string as str
 import matplotlib.pyplot as plt
 import matplotlib.lines as lines
 
+f, ax = plt.subplots(2,1,figsize=(8.5,11))
+
 def AddCurve(infile,ls,col,lbl,nlines):
 
     infile=open(infile,"r")
@@ -38,16 +40,21 @@ def AddCurve(infile,ls,col,lbl,nlines):
         
         j += 1
 
-    plt.plot(t,a, linestyle=ls, color=col, linewidth=2, label=lbl)
-        
+    ax[0].plot(t,a, linestyle=ls, color=col, linewidth=2)
+    ax[1].plot(t,e, linestyle=ls, color=col, linewidth=2, label=lbl)    
 
-plt.figure(figsize=(6.5,8), dpi=200)
+#plt.figure(figsize=(6.5,8), dpi=200)
 
-plt.xlim(-7.5,0)
-plt.ylim(0,75)
-plt.tick_params(axis='both', labelsize=20)
-plt.ylabel(r'Semi-major Axis (R$_\oplus$)', fontsize=20)
-plt.xlabel('Time (Gyr)',fontsize=20)
+ax[0].set_xlim(-5,0)
+ax[0].set_ylim(0,75)
+ax[0].tick_params(axis='both', labelsize=20)
+ax[0].set_ylabel(r'Semi-major Axis (R$_\oplus$)', fontsize=20)
+
+ax[1].set_xlim(-5,0)
+ax[1].set_ylim(-0.02,0.6)
+ax[1].tick_params(axis='both', labelsize=20)
+ax[1].set_ylabel('Eccentricity', fontsize=20)
+ax[1].set_xlabel('Time (Gyr)',fontsize=20)
 
 AddCurve('earthmoon.q12','-','k','Q = 12, e = 0',161)
 AddCurve('earthmoon.q34','-','b','Q = 34, e = 0',452)
@@ -59,7 +66,7 @@ AddCurve('earthmoon.tau125',':','b',r'$\tau$ = 125s, e = 0',456)
 AddCurve('orbit.tau640',':','g',r'$\tau$ = 640s, e = 0.06',95)
 AddCurve('orbit.tau125',':','c',r'$\tau$ = 125s, e = 0.06',481)
 
-plt.legend(loc='upper left')
+ax[1].legend(loc='upper right')
 
 plt.tight_layout()
 
